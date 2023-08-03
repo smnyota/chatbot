@@ -2,10 +2,11 @@ import { useState } from 'react'
 import './App.css'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
+import MoneyMentorLogo from '/Users/vahinpalle/hackathon/testGPTAPP/src/assets/Capital_One_logo.svg.png'; 
 
-const API_KEY = "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";
-// "Explain things like you would to a 10 year old learning how to code."
-const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
+const API_KEY = "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";
+
+const systemMessage = {
   "role": "system", "content": "Explain things like you are a financial advisor."
 }
 
@@ -14,7 +15,7 @@ function App() {
     {
       message: "Hello, I'm here to assist you with your finances!",
       sentTime: "just now",
-      sender: "ChatGPT"
+      sender: "MoneyMentor"
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
@@ -30,17 +31,11 @@ function App() {
     
     setMessages(newMessages);
 
-    // Initial system message to determine ChatGPT functionality
-    // How it responds, how it talks, etc.
     setIsTyping(true);
     await processMessageToChatGPT(newMessages);
   };
 
-  async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
-    // Format messages for chatGPT API
-    // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
-    // So we need to reformat
-
+  async function processMessageToChatGPT(chatMessages) {
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
       if (messageObject.sender === "ChatGPT") {
@@ -51,15 +46,11 @@ function App() {
       return { role: role, content: messageObject.message}
     });
 
-
-    // Get the request body set up with the model we plan to use
-    // and the messages which we formatted above. We add a system message in the front to'
-    // determine how we want chatGPT to act. 
     const apiRequestBody = {
       "model": "gpt-3.5-turbo",
       "messages": [
-        systemMessage,  // The system message DEFINES the logic of our chatGPT
-        ...apiMessages // The messages from our chat with ChatGPT
+        systemMessage, 
+        ...apiMessages 
       ]
     }
 
@@ -74,7 +65,6 @@ function App() {
     }).then((data) => {
       return data.json();
     }).then((data) => {
-      console.log(data);
       setMessages([...chatMessages, {
         message: data.choices[0].message.content,
         sender: "ChatGPT"
@@ -85,19 +75,27 @@ function App() {
 
   return (
     <div className="App">
-      <div style={{ position:"relative", height: "800px", width: "700px"  }}>
+      <header className="app-header">
+        <img src={MoneyMentorLogo} alt="MoneyMentor Logo" className="logo" />
+        <h1>MoneyMentor</h1>
+      </header>
+      <div style={{ position:"relative", height: "90vh", width: "100vw"  }}>
         <MainContainer>
-          <ChatContainer>       
+          <ChatContainer className="chat-container">       
             <MessageList 
+              className="message-list"
               scrollBehavior="smooth" 
               typingIndicator={isTyping ? <TypingIndicator content="ChatGPT is typing" /> : null}
             >
               {messages.map((message, i) => {
-                console.log(message)
                 return <Message key={i} model={message} />
               })}
             </MessageList>
-            <MessageInput placeholder="Type message here" onSend={handleSend} />        
+            <MessageInput 
+              className="message-input"
+              placeholder="Type message here" 
+              onSend={handleSend} 
+            />        
           </ChatContainer>
         </MainContainer>
       </div>

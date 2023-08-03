@@ -1,42 +1,60 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #87b3d8;
 }
 
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #87b3d8; 
+  color: #FFFFFF;
+  width: 100vw;
+  height: 8vh;
+}
+
+.app-header h1 {
+  font-family: 'Ysabeau SC';
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 92vh;
+  width: 100vw;
+  background-color: #FFFFFF; 
+  color: #c2705c;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1em;
+  background-color: #FFFFFF;
+}
+
+.message-input {
+  padding: 1em;
+  background-color: #FFFFFF;
+  color: #0047AB;
+  border-top: 1px solid #0047AB;
+}
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  height: 4rem; /* Adjust the height as needed */
+  margin-right: 1rem; /* Add margin to separate the logo and text */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
 }
